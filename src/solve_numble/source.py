@@ -6,6 +6,13 @@ import random
 # 1st input corresponds to the target, 2nd input is list containing 6 the integer numbers to use
 # 1 ouput: A string of a valid equation that reaches the target.
 
+class InputLengthError(Exception):  
+    """  
+    Raised when inputs array does not contain 6 values
+    """  
+  
+    pass  
+
 def solve_numble(target, inputs):
     """Function to return the solved numble equation
 
@@ -18,6 +25,17 @@ def solve_numble(target, inputs):
     """
 
     # First would be checking that inputs are of correct form (all integers)
+    for input in inputs:
+        if isinstance(input, int) == False:
+            raise TypeError("All input numbers must be integers!! You naughty boy.")
+
+    # Check length of inputs is 6
+    if len(inputs) != 6:
+        raise InputLengthError("Either too many or too few input numbers were given.")
+
+    # Check target is an integer
+    if isinstance(target, int) == False:
+        raise TypeError("Target number is not an integer.")
 
     solved = False
     
