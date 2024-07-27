@@ -21,10 +21,10 @@ def solve_numble(target, inputs):
 
     solved = False
     
-    # keep going until solved or had 100 goes
+    # keep going until solved or had 100000 goes
     attempts = 0
 
-    while solved == False and attempts < 1000:
+    while solved == False and attempts < 100000:
 
         # One method would simply be to pick random number, random operator, random number etc...
         operators = ['+', '-', '*', '/']
@@ -47,9 +47,12 @@ def solve_numble(target, inputs):
             # update stored val
             stored_val = str(eval(stored_val + operator + num))
 
+            # Add brackets if needed
+            if eval(eq + operator + num) != float(stored_val):
+                eq = '(' + eq + ')'
+            
             # Add to equation
-            eq += (" " + operator)
-            eq += (" " + num)
+            eq = eq + operator + num
 
             if float(stored_val) == target:
                 solved = True
@@ -57,12 +60,8 @@ def solve_numble(target, inputs):
 
         attempts += 1
 
-        print(f"attempt {attempts}: {eq}")
-    
-    print("Solved! (Or done 100 attempts)")
-    print("Attempts ", attempts)
-
-    solved_eq = eq
-    return solved_eq
-
-print(solve_numble(756, [3, 4, 6, 8, 75, 100]))
+    if solved:
+        solved_eq = eq
+        return solved_eq
+    else:
+        return(f'No solution found in {attempts} attempts')
